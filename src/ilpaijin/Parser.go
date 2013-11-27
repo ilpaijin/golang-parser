@@ -2,9 +2,9 @@ package ilpaijin
 
 import (
 	"errors"
-	"fmt"
 	"log"
-	"os"
+	"net/http"
+	_ "net/http/pprof"
 	"reflect"
 )
 
@@ -19,20 +19,32 @@ func Call(m map[string]interface{}, name string, params ...interface{}) (result 
 		in[k] = reflect.ValueOf(param)
 	}
 	result = f.Call(in)
-	fmt.Println(result)
 	return
 }
 
 func Parser(xmlType string, parseType string) {
+
 	funcs := map[string]interface{}{
 		"pregame": Pregame,
+		"coupons": Coupons,
 	}
 
-	coupon, err := Call(funcs, os.Args[1], os.Args[2])
+	if funcs[xmlType] == nil {
+		log.Fatal("xmlType not supported")
+	}
+
+	resultSet, err := Call(funcs, xmlType, parseType)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("error calling parser interface")
 	}
 
-	fmt.Println(coupon[0].Interface())
+	var returnSet interface{} = resultSet[0].Interface()
 
+	log.Fatal(returnSet)
+
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
+
+	return
 }
