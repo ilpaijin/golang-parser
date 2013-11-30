@@ -49,7 +49,7 @@ type Quote struct {
 	ClasseQuota string  `xml:"ClasseQuota,attr"`
 }
 
-func Pregame(parseType string) *ArrayOfSport {
+func Pregame(parseType string) (xmlData ArrayOfSport) {
 
 	xmlResource, err := os.Open("data/" + parseType + "_pregame.xml")
 	if err != nil {
@@ -66,8 +66,6 @@ func Pregame(parseType string) *ArrayOfSport {
 	defer xmlResource.Close()
 
 	b, _ := ioutil.ReadAll(xmlResource)
-
-	var xmlData *ArrayOfSport
 
 	xml.Unmarshal(b, &xmlData)
 

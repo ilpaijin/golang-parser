@@ -21,16 +21,14 @@ func Db() *sql.DB {
 	return q
 }
 
-func GetUserByIdCoupon(idcoupon string) (r int) {
+func GetUserByIdCoupon(db *sql.DB, idcoupon string) (r int) {
 	var (
 		idCoupon int
 		idUtente int
 		res      int
 	)
 
-	db := Db()
-
-	rows := db.QueryRow("SELECT idCoupon, idUtente FROM bundle_jackpot_coupons WHERE idCoupon=?", idcoupon).Scan(&idCoupon, &idUtente)
+	rows := db.QueryRow("SELECT idCoupon, idUtente FROM jackpot_coupons WHERE idCoupon=?", idcoupon).Scan(&idCoupon, &idUtente)
 
 	switch {
 	case rows == sql.ErrNoRows:

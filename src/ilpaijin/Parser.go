@@ -22,7 +22,7 @@ func Call(m map[string]interface{}, name string, params ...interface{}) (result 
 	return
 }
 
-func Parser(xmlType string, parseType string) {
+func Parser(xmlType string, parseType string) (resultSet []reflect.Value, err error) {
 
 	funcs := map[string]interface{}{
 		"pregame": Pregame,
@@ -33,14 +33,10 @@ func Parser(xmlType string, parseType string) {
 		log.Fatal("xmlType not supported")
 	}
 
-	resultSet, err := Call(funcs, xmlType, parseType)
+	resultSet, err = Call(funcs, xmlType, parseType)
 	if err != nil {
 		log.Fatal("error calling parser interface")
 	}
-
-	var returnSet interface{} = resultSet[0].Interface()
-
-	log.Fatal(returnSet)
 
 	go func() {
 		log.Println(http.ListenAndServe("localhost:6060", nil))
