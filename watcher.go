@@ -50,7 +50,7 @@ func callShellParser() {
 		panic(lookErr)
 	}
 
-	args := []string{"pregame", "full"}
+	args := []string{"", "pregame", "full"}
 
 	env := os.Environ()
 
