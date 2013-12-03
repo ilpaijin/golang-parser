@@ -1,6 +1,7 @@
 package parsers
 
 import (
+	"encoding/csv"
 	"encoding/xml"
 	"io/ioutil"
 	"log"
@@ -67,4 +68,27 @@ func (c *Coupon) Coupons(parseType string) (xmlData Feed) {
 	xml.Unmarshal(b, &xmlData)
 
 	return xmlData
+}
+
+func (c *Coupon) Csvize() {
+	file, err := os.Create("data/Coupon.csv")
+	if err != nil {
+		log.Fatal("Error creating csv file")
+	}
+	defer file.Close()
+
+	log.Fatal(c)
+
+	writer := csv.NewWriter(file)
+
+	var record []string
+
+	for _, it := range c.Quote {
+
+		record = append(record, it.TipoQuota)
+
+		writer.Write(record)
+	}
+
+	writer.Flush()
 }

@@ -1,6 +1,7 @@
 package parsers
 
 import (
+	"encoding/csv"
 	"encoding/xml"
 	"io/ioutil"
 	"log"
@@ -70,4 +71,27 @@ func (p *ArrayOfSport) Pregame(parseType string) (xmlData Feed) {
 	xml.Unmarshal(b, &xmlData)
 
 	return xmlData
+}
+
+func (c *ArrayOfSport) Csvize() {
+	file, err := os.Create("data/Pregame.csv")
+	if err != nil {
+		log.Fatal("Error creating csv file")
+	}
+	defer file.Close()
+
+	log.Fatal(c)
+
+	writer := csv.NewWriter(file)
+
+	var record []string
+
+	for _, it := range c.Sports {
+
+		record = append(record, string(it.IDSport))
+
+		writer.Write(record)
+	}
+
+	writer.Flush()
 }
