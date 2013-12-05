@@ -48,7 +48,7 @@ type Quota struct {
 	IDQuota   int    `xml:"IDQuota"`
 }
 
-func (c *Coupon) Coupons(parseType string) (xmlData Feed) {
+func (c *Coupon) Parse(parseType string) (xmlData Coupon) {
 
 	switch parseType {
 	case "full":

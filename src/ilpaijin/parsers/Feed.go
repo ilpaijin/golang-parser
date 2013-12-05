@@ -1,6 +1,5 @@
 package parsers
 
 type Feed struct {
-	ArrayOfSport
-	Coupon
+	Data interface{}
 }

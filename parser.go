@@ -15,7 +15,8 @@ func main() {
 
 	parsedSet := ilpaijin.Parse(os.Args[1], os.Args[2])
 
-	parsedSet.Csvize()
+	fmt.Println(parsedSet)
+	// parsedSet.Data.Csvize()
 
 	db := ilpaijin.Db()
 	defer db.Close()

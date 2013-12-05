@@ -50,7 +50,7 @@ type Quote struct {
 	ClasseQuota string  `xml:"ClasseQuota,attr"`
 }
 
-func (p *ArrayOfSport) Pregame(parseType string) (xmlData Feed) {
+func (p *ArrayOfSport) Parse(parseType string) (xmlData ArrayOfSport) {
 
 	xmlResource, err := os.Open("data/" + parseType + "_pregame.xml")
 	if err != nil {

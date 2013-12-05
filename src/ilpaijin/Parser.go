@@ -7,16 +7,18 @@ import (
 
 func Parse(xmlType string, parseType string) (resultSet parsers.Feed) {
 
-	var f parsers.Feed
-
 	switch xmlType {
 	case "pregame":
-		resultSet = f.Pregame(parseType)
+		f := new(parsers.ArrayOfSport)
+		resultSet.Data = f.Parse(parseType)
 	case "coupon":
-		resultSet = f.Coupons(parseType)
+		f := new(parsers.Coupon)
+		resultSet.Data = f.Parse(parseType)
 	default:
 		log.Fatal("xmlType not supported")
 	}
 
-	return resultSet
+	log.Fatal(resultSet.Data)
+
+	return
 }
