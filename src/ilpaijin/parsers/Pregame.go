@@ -3,6 +3,7 @@ package parsers
 import (
 	"encoding/csv"
 	"encoding/xml"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -50,7 +51,7 @@ type Quote struct {
 	ClasseQuota string  `xml:"ClasseQuota,attr"`
 }
 
-func (p *ArrayOfSport) Parse(parseType string) (xmlData ArrayOfSport) {
+func (p *ArrayOfSport) Parse(parseType string) {
 
 	xmlResource, err := os.Open("data/" + parseType + "_pregame.xml")
 	if err != nil {
@@ -68,27 +69,27 @@ func (p *ArrayOfSport) Parse(parseType string) (xmlData ArrayOfSport) {
 
 	b, _ := ioutil.ReadAll(xmlResource)
 
-	xml.Unmarshal(b, &xmlData)
-
-	return xmlData
+	xml.Unmarshal(b, &p)
 }
 
 func (c *ArrayOfSport) Csvize() {
+
 	file, err := os.Create("data/Pregame.csv")
 	if err != nil {
 		log.Fatal("Error creating csv file")
 	}
 	defer file.Close()
 
-	log.Fatal(c)
-
 	writer := csv.NewWriter(file)
 
 	var record []string
 
+	log.Println(c.XMLName)
+
 	for _, it := range c.Sports {
 
-		record = append(record, string(it.IDSport))
+		log.Fatal(it)
+		record = append(record, fmt.Sprintf("%d", it.IDSport))
 
 		writer.Write(record)
 	}

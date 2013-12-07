@@ -1,5 +1,6 @@
 package parsers
 
-type Feed struct {
-	Data interface{}
+type Feed interface {
+	Parse(parseType string)
+	Csvize()
 }

@@ -48,7 +48,7 @@ type Quota struct {
 	IDQuota   int    `xml:"IDQuota"`
 }
 
-func (c *Coupon) Parse(parseType string) (xmlData Coupon) {
+func (c *Coupon) Parse(parseType string) {
 
 	switch parseType {
 	case "full":
@@ -65,9 +65,7 @@ func (c *Coupon) Parse(parseType string) (xmlData Coupon) {
 
 	b, _ := ioutil.ReadAll(xmlResource)
 
-	xml.Unmarshal(b, &xmlData)
-
-	return xmlData
+	xml.Unmarshal(b, &c)
 }
 
 func (c *Coupon) Csvize() {
